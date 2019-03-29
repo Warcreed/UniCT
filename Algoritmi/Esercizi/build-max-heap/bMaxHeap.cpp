@@ -2,17 +2,11 @@
 #include<string>
 #include<sstream>
 #include<cmath>
+#include<iostream>
 
 using namespace std;
 
-template <class T> class PriorityQueue {
-	public:
-		virtual T* extractMax() = 0;
-		virtual PriorityQueue<T>* enqueue(T x) = 0;
-		virtual int size() = 0;
-};
-
-template <class H> class BinaryHeap : public PriorityQueue<H>{
+template <class H> class MaxBinaryHeap{
 	private:
 		H **A;
 		int heapsize;
@@ -21,6 +15,8 @@ template <class H> class BinaryHeap : public PriorityQueue<H>{
 		int right(int i) { return (i<<1)|1; }
 		int parent(int i) { return i>>1; }
 		
+		int compare(H* a, H* b){ return (*a)-(*b);}
+
 		void scambia(int i, int j) {
 			H* tmp = A[i];
 			A[i] = A[j];
@@ -41,44 +37,12 @@ template <class H> class BinaryHeap : public PriorityQueue<H>{
 		
 		
 	public:
-		virtual int compare(H *a, H *b)=0;
-		BinaryHeap(int size) {
-			A = new H*[size];
+		MaxBinaryHeap(H** a,int size) {
+			A = a;
 			len = size;
 			heapsize = 0;
 		}
-		
-		H* extractMax() {
-			if(heapsize==0) return NULL;
-			scambia(1, heapsize);
-			heapsize--;
-			heapify(1);
-			return A[heapsize+1];
-		}
-		
-		BinaryHeap<H>* enqueue(H x) {
-			heapsize += 1;
-			A[heapsize] = new H(x);
-			int i = heapsize;
-			while(i>1 && compare(A[i],A[parent(i)])>0) {
-				scambia(i, parent(i));
-				i = parent(i);
-			}
-			return this;
-		}
-		
-		BinaryHeap<H>* increaseKey(int i, H *k) {
-			if(i>heapsize) return this;
-			if(i<1) return this;
-			if( *A[i] >= *k ) return this;
-			*A[i] = *k;
-			while(i>1 && compare(A[i],A[parent(i)])>0) {
-				scambia(i, parent(i));
-				i = parent(i);
-			}
-			return this;
-		}
-		
+			
 		int size() {
 			return heapsize;
 		}
@@ -95,16 +59,6 @@ template <class H> class BinaryHeap : public PriorityQueue<H>{
 		}
 };
 
-template <class H> class MaxBinaryHeap : public BinaryHeap<H> {
-	private: 
-	public:
-		int compare(H* a, H *b) {
-			return (*a)-(*b);
-		}
-		MaxBinaryHeap(int size) : BinaryHeap<H>(size) {}
-};
-
-
 int main(){
 
 const int DIM=3;
@@ -116,49 +70,51 @@ for(int i=0; i<DIM; i++){
 	in >> type;
 	int N=0;
 	in >> N;
+	
 	if(type=="bool"){
-		MaxBinaryHeap<bool> *H = new MaxBinaryHeap<bool>(100);
+		bool** a = new bool*[N];
+		
 		for(int j=0; j<N; j++){
-			bool tmp;
-			in >> tmp;
-			H->enqueue(tmp);
+			cout << N << endl;
+			in >> *a[j];
 		}
+			
+		
+		MaxBinaryHeap<bool> *H = new MaxBinaryHeap<bool>(a,N);
+		H->BuildHeap();
+		out << H->print() << endl;
+		
+	}
+	
+	if(type=="char"){
+		char** a = new char*[N];
+		for(int j=0; j<N; j++)
+			in >> *a[j];
+		
+		MaxBinaryHeap<char> *H = new MaxBinaryHeap<char>(a,N);
 		H->BuildHeap();
 		out << H->print() << endl;
 	}
 	
 	if(type=="int"){
-		MaxBinaryHeap<int> *H = new MaxBinaryHeap<int>(100);
-		for(int j=0; j<N; j++){
-			int tmp;
-			in >> tmp;
-			H->enqueue(tmp);
-		}
-		H->BuildHeap();
-		out << H->print() << endl;
-	}
-	
-	if(type=="char"){
-		MaxBinaryHeap<char> *H = new MaxBinaryHeap<char>(100);
-		for(int j=0; j<N; j++){
-			char tmp;
-			in >> tmp;
-			H->enqueue(tmp);
-		}
+		int** a = new int*[N];
+		for(int j=0; j<N; j++)
+			in >> *a[j];
+		
+		MaxBinaryHeap<int> *H = new MaxBinaryHeap<int>(a,N);
 		H->BuildHeap();
 		out << H->print() << endl;
 	}
 	
 	if(type=="double"){
-		MaxBinaryHeap<double> *H = new MaxBinaryHeap<double>(100);
-		for(int j=0; j<N; j++){
-			double tmp;
-			in >> tmp;
-			H->enqueue(tmp);
-		}
+		double** a = new double*[N];
+		for(int j=0; j<N; j++)
+			in >> *a[j];
+		
+		MaxBinaryHeap<double> *H = new MaxBinaryHeap<double>(a,N);
 		H->BuildHeap();
 		out << H->print() << endl;
-	}	
+	}
 }
 return 0;
 }
