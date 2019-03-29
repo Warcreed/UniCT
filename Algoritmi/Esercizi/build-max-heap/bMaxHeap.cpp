@@ -15,7 +15,6 @@ template <class H> class MaxBinaryHeap{
 		int parent(int i) { return i>>1; }
 
 		void scambia(int i, int j) {
-			cout << "prova";
 			H* tmp = A[i];
 			A[i] = A[j];
 			A[j] = tmp;
@@ -26,9 +25,8 @@ template <class H> class MaxBinaryHeap{
 			int l = left(i);
 			int r = right(i);
 			int max = i;
-			if(l<heapsize && *A[l]>*A[i]) max=l;
-			if(r<heapsize && *A[r]>*A[max]) max=r;
-			//cout << i << " " << l << " " << r<<endl; 
+			if(l<=heapsize && *A[l]>*A[i]) max=l;
+			if(r<=heapsize && *A[r]>*A[max]) max=r;
 			if(max==i) return;
 			scambia(i,max);
 			heapify(max);
@@ -46,7 +44,6 @@ template <class H> class MaxBinaryHeap{
 		}
 		
 		string print() {
-			
 			stringstream tmp;
 			for(int i=1; i<=heapsize; i++) 
 				tmp << *A[i] << " ";
@@ -54,13 +51,13 @@ template <class H> class MaxBinaryHeap{
 		}
 		
 		void BuildHeap(){
-			for(int i=floor(heapsize/2); i>0; i--) heapify(i);
+			for(int i=floor(heapsize); i>0; i--) heapify(i);
 			}
 };
 
 int main(){
 
-const int DIM=3;
+const int DIM=100;
 ifstream in("input.txt");
 ofstream out("output.txt");
 
@@ -69,24 +66,22 @@ for(int i=0; i<DIM; i++){
 	in >> type;
 	int N=0;
 	in >> N;
-	cout << "prova";
 	if(type=="bool"){
-		bool** a = new bool*[N];
-		cout << "prova";
-		for(int j=0; j<N; j++){
+		bool** a = new bool*[N+1];
+		for(int j=1; j<=N; j++){
 			a[j]= new bool;
 			in >> *a[j];
 		}
 			
 		MaxBinaryHeap<bool> *H = new MaxBinaryHeap<bool>(a,N);
-		
-		cout << H->print() << endl;
+		H->BuildHeap();
+		out << H->print() << endl;
 		
 	}
 	
 	if(type=="char"){
-		char** a = new char*[N];
-		for(int j=0; j<N; j++){
+		char** a = new char*[N+1];
+		for(int j=1; j<=N; j++){
 			a[j]= new char;
 			in >> *a[j];
 		}
@@ -97,8 +92,8 @@ for(int i=0; i<DIM; i++){
 	}
 	
 	if(type=="int"){
-		int** a = new int*[N];
-		for(int j=0; j<N; j++){
+		int** a = new int*[N+1];
+		for(int j=1; j<=N; j++){
 			a[j]= new int;
 			in >> *a[j];
 		}
@@ -109,8 +104,8 @@ for(int i=0; i<DIM; i++){
 	}
 	
 	if(type=="double"){
-		double** a = new double*[N];
-		for(int j=0; j<N; j++){
+		double** a = new double*[N+1];
+		for(int j=1; j<=N; j++){
 			a[j]= new double;
 			in >> *a[j];
 		}
