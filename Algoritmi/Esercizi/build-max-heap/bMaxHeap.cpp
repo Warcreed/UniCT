@@ -10,14 +10,12 @@ template <class H> class MaxBinaryHeap{
 	private:
 		H **A;
 		int heapsize;
-		int len;
 		int left(int i) { return i<<1; }
 		int right(int i) { return (i<<1)|1; }
 		int parent(int i) { return i>>1; }
-		
-		int compare(H* a, H* b){ return (*a)-(*b);}
 
 		void scambia(int i, int j) {
+			cout << "prova";
 			H* tmp = A[i];
 			A[i] = A[j];
 			A[j] = tmp;
@@ -28,8 +26,9 @@ template <class H> class MaxBinaryHeap{
 			int l = left(i);
 			int r = right(i);
 			int max = i;
-			if(l<=heapsize && compare(A[max], A[l])<0) max=l;
-			if(r<=heapsize && compare(A[max], A[r])<0) max=r;
+			if(l<heapsize && *A[l]>*A[i]) max=l;
+			if(r<heapsize && *A[r]>*A[max]) max=r;
+			//cout << i << " " << l << " " << r<<endl; 
 			if(max==i) return;
 			scambia(i,max);
 			heapify(max);
@@ -39,8 +38,7 @@ template <class H> class MaxBinaryHeap{
 	public:
 		MaxBinaryHeap(H** a,int size) {
 			A = a;
-			len = size;
-			heapsize = 0;
+			heapsize = size;
 		}
 			
 		int size() {
@@ -48,6 +46,7 @@ template <class H> class MaxBinaryHeap{
 		}
 		
 		string print() {
+			
 			stringstream tmp;
 			for(int i=1; i<=heapsize; i++) 
 				tmp << *A[i] << " ";
@@ -56,7 +55,7 @@ template <class H> class MaxBinaryHeap{
 		
 		void BuildHeap(){
 			for(int i=floor(heapsize/2); i>0; i--) heapify(i);
-		}
+			}
 };
 
 int main(){
@@ -70,26 +69,27 @@ for(int i=0; i<DIM; i++){
 	in >> type;
 	int N=0;
 	in >> N;
-	
+	cout << "prova";
 	if(type=="bool"){
 		bool** a = new bool*[N];
-		
+		cout << "prova";
 		for(int j=0; j<N; j++){
-			cout << N << endl;
+			a[j]= new bool;
 			in >> *a[j];
 		}
 			
-		
 		MaxBinaryHeap<bool> *H = new MaxBinaryHeap<bool>(a,N);
-		H->BuildHeap();
-		out << H->print() << endl;
+		
+		cout << H->print() << endl;
 		
 	}
 	
 	if(type=="char"){
 		char** a = new char*[N];
-		for(int j=0; j<N; j++)
+		for(int j=0; j<N; j++){
+			a[j]= new char;
 			in >> *a[j];
+		}
 		
 		MaxBinaryHeap<char> *H = new MaxBinaryHeap<char>(a,N);
 		H->BuildHeap();
@@ -98,8 +98,10 @@ for(int i=0; i<DIM; i++){
 	
 	if(type=="int"){
 		int** a = new int*[N];
-		for(int j=0; j<N; j++)
+		for(int j=0; j<N; j++){
+			a[j]= new int;
 			in >> *a[j];
+		}
 		
 		MaxBinaryHeap<int> *H = new MaxBinaryHeap<int>(a,N);
 		H->BuildHeap();
@@ -108,8 +110,10 @@ for(int i=0; i<DIM; i++){
 	
 	if(type=="double"){
 		double** a = new double*[N];
-		for(int j=0; j<N; j++)
+		for(int j=0; j<N; j++){
+			a[j]= new double;
 			in >> *a[j];
+		}
 		
 		MaxBinaryHeap<double> *H = new MaxBinaryHeap<double>(a,N);
 		H->BuildHeap();
