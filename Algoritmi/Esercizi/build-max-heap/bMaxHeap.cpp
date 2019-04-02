@@ -51,7 +51,7 @@ template <class H> class MaxBinaryHeap{
 		}
 		
 		void BuildHeap(){
-			for(int i=floor(heapsize); i>0; i--) heapify(i);
+			for(int i=floor(heapsize/2); i>0; i--) heapify(i);
 			}
 };
 
