@@ -5,7 +5,7 @@
 
 using namespace std;
 
-template <class H> class MaxBinaryHeap{
+template <class H> class MinBinaryHeap{
 	private:
 		H **A;
 		int heapsize;
@@ -33,7 +33,7 @@ template <class H> class MaxBinaryHeap{
 		
 		
 	public:
-		MaxBinaryHeap(H** a,int size) {
+		MinBinaryHeap(H** a,int size) {
 			A = a;
 			heapsize = size;
 		}
@@ -50,7 +50,7 @@ template <class H> class MaxBinaryHeap{
 		}
 		
 		void BuildHeap(){
-			for(int i=floor(heapsize); i>0; i--) heapify(i);
+			for(int i=floor(heapsize/2); i>0; i--) heapify(i);
 			}
 };
 
@@ -72,7 +72,7 @@ for(int i=0; i<DIM; i++){
 			in >> *a[j];
 		}
 			
-		MaxBinaryHeap<bool> *H = new MaxBinaryHeap<bool>(a,N);
+		MinBinaryHeap<bool> *H = new MinBinaryHeap<bool>(a,N);
 		H->BuildHeap();
 		out << H->print() << endl;
 		
@@ -85,7 +85,7 @@ for(int i=0; i<DIM; i++){
 			in >> *a[j];
 		}
 		
-		MaxBinaryHeap<char> *H = new MaxBinaryHeap<char>(a,N);
+		MinBinaryHeap<char> *H = new MinBinaryHeap<char>(a,N);
 		H->BuildHeap();
 		out << H->print() << endl;
 	}
@@ -97,7 +97,7 @@ for(int i=0; i<DIM; i++){
 			in >> *a[j];
 		}
 		
-		MaxBinaryHeap<int> *H = new MaxBinaryHeap<int>(a,N);
+		MinBinaryHeap<int> *H = new MinBinaryHeap<int>(a,N);
 		H->BuildHeap();
 		out << H->print() << endl;
 	}
@@ -109,7 +109,7 @@ for(int i=0; i<DIM; i++){
 			in >> *a[j];
 		}
 		
-		MaxBinaryHeap<double> *H = new MaxBinaryHeap<double>(a,N);
+		MinBinaryHeap<double> *H = new MinBinaryHeap<double>(a,N);
 		H->BuildHeap();
 		out << H->print() << endl;
 	}
