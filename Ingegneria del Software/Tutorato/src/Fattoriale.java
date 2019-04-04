@@ -1,6 +1,6 @@
-public class Moltiplicazione extends Operazione{
-
-	public Moltiplicazione(String  operandi) {
+public class Fattoriale extends Operazione{
+	
+	public Fattoriale(String  operandi) {
 		super(operandi);
 	}
 	
@@ -12,10 +12,11 @@ public class Moltiplicazione extends Operazione{
 	@Override
 	public float calcolaRisultato() {
 		float result = 0;
+		float div = valori.get(0);
 		
-		for (float f : valori) {
-			result *= f;
+		for (int i=1; i<valori.size();i++) {
+			if(div!=0) result+=valori.get(i)/div;
 		}
 		return result;
-	}
+	
 }

@@ -18,7 +18,7 @@ public abstract class Operazione {
 	 * Lista degli operandi usati per il calcolo del risultato.
 	 * 
 	 */
-	protected List valori = new ArrayList<>();
+	protected List<Float> valori = new ArrayList<Float>();
 	
 	public Operazione(String operandi) {
 		parsaOperandi(operandi);
