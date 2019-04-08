@@ -46,8 +46,8 @@ template<class H> class BinaryHeap{
         virtual bool compare(H* a, H* b) = 0;
 
         BinaryHeap(int size){
-            A = new H*[++size];
-            len = size;
+            A = new H*[size];
+            len = size+1;
             heapsize=0;
             count = 0;
         }
@@ -77,7 +77,7 @@ template<class H> class BinaryHeap{
         }
 
         H* extractMax(){
-            if(heapsize<0) return NULL;
+            if(heapsize==0) return NULL;
             scambia(1,heapsize);
             heapsize--;
             heapify(1);
@@ -86,7 +86,7 @@ template<class H> class BinaryHeap{
 
         string print(){
             stringstream s;
-            for(int i=1; i<heapsize; i++)
+            for(int i=1; i<=heapsize; i++)
                 s << *A[i] << " ";
             return s.str();
         }
@@ -104,7 +104,7 @@ template<class H> class MaxHeap : public BinaryHeap<H>{
 
 int main(){
 
-const int DIM = 1;
+const int DIM = 3;
 ifstream in("input.txt");
 ofstream out("output.txt");
 
@@ -127,9 +127,9 @@ for(int i=0; i<DIM; i++){
             else{
                 H->extractMax();
             }
-            cout << H->print() << endl;
+            //cout << type << " heap: " << H->print() << endl;
         }
-     //   cout << H->getCount() << " " << H->print() << endl;
+        out << H->getCount() << " " << H->print() << endl;
     }
 
     if(type=="char"){
@@ -143,7 +143,7 @@ for(int i=0; i<DIM; i++){
                 H->extractMax();
             }
         }
-        cout << H->getCount() << " " << H->print() << endl;
+        out << H->getCount() << " " << H->print() << endl;
     }
 
     if(type=="int"){
@@ -160,7 +160,7 @@ for(int i=0; i<DIM; i++){
                 H->extractMax();
             }
         }
-        cout << H->getCount() << " " << H->print() << endl;
+        out << H->getCount() << " " << H->print() << endl;
     }
 
     if(type=="double"){
@@ -177,7 +177,7 @@ for(int i=0; i<DIM; i++){
                 H->extractMax();
             }
         }
-        cout << H->getCount() << " " << H->print() << endl;
+        out << H->getCount() << " " << H->print() << endl;
     }
 }
 
