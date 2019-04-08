@@ -11,6 +11,7 @@ template<class H> class BinaryHeap{
         H** A;
         int len;
         int heapsize;
+        int count;
         int left(int i){ return i<<1;}
         int right(int i){ return (i<<1)|1;}
         int parent(int i){ return i>>1;}
@@ -23,6 +24,7 @@ template<class H> class BinaryHeap{
 
         void heapify(int i){
             if(i>heapsize) return;
+            count++;
             int l = left(i);
             int r = right(i);
             int max = i;
@@ -44,15 +46,17 @@ template<class H> class BinaryHeap{
         virtual bool compare(H* a, H* b) = 0;
 
         BinaryHeap(int size){
-            A = new H**[++size];
+            A = new H*[++size];
             len = size;
             heapsize=0;
+            count = 0;
         }
 
         BinaryHeap(H** A, int size, int Nelement){
             this.A=A;
             len=size;
             heapsize=Nelement;
+            count = 0;
         }
 
         void BuildHeap(){
@@ -73,27 +77,34 @@ template<class H> class BinaryHeap{
         }
 
         H* extractMax(){
-            if(heapsize==0) return NULL;
-            scambia(1,heapsize--);
+            if(heapsize<0) return NULL;
+            scambia(1,heapsize);
+            heapsize--;
             heapify(1);
             return A[heapsize+1];
         }
 
         string print(){
-            stringstream s = "";
-            for(int i=1; i<=heapsize; i++)
+            stringstream s;
+            for(int i=1; i<heapsize; i++)
                 s << *A[i] << " ";
             return s.str();
         }
 
-        int size(){ return heapsize;}
+        int getCount(){ return count;}
 };
 
+template<class H> class MaxHeap : public BinaryHeap<H>{
+    public:
+        MaxHeap(int size) : BinaryHeap<H>(size){}
+        MaxHeap(H** A, int size, int N) : BinaryHeap<H>(A,size, N){}
 
+        bool compare(H* a, H* b){ return (*a) < (*b);}
+};
 
 int main(){
 
-const int DIM = 3;
+const int DIM = 1;
 ifstream in("input.txt");
 ofstream out("output.txt");
 
@@ -104,20 +115,69 @@ for(int i=0; i<DIM; i++){
     in >> type >> N;
 
     if(type=="bool"){
+        MaxHeap<bool>* H = new MaxHeap<bool>(N);
+        for(int j=0; j<N; j++){
+            in >> type;
+            if(type[1]==':'){
+                stringstream s(type.substr(2,type.length()));
+                bool v;
+                s >> v;
+                H->enqueue(v);
+            }
+            else{
+                H->extractMax();
+            }
+            cout << H->print() << endl;
+        }
+     //   cout << H->getCount() << " " << H->print() << endl;
+    }
 
-        in >> type;
-        if(type.find(':')!=string::npos){
-            stringstream s(type.substr(type.find(':')+1,type.length()));
-            int v;
-            s >> v;
-            cout << ++v;
+    if(type=="char"){
+        MaxHeap<char>* H = new MaxHeap<char>(N);
+        for(int j=0; j<N; j++){
+            in >> type;
+            if(type[1]==':'){
+                H->enqueue(type[2]);
+            }
+            else{
+                H->extractMax();
+            }
         }
-            
-        else
-        {
-            cout << "bonobo";
+        cout << H->getCount() << " " << H->print() << endl;
+    }
+
+    if(type=="int"){
+        MaxHeap<int>* H = new MaxHeap<int>(N);
+        for(int j=0; j<N; j++){
+            in >> type;
+            if(type[1]==':'){
+                stringstream s(type.substr(2,type.length()));
+                int v;
+                s >> v;
+                H->enqueue(v);
+            }
+            else{
+                H->extractMax();
+            }
         }
-        
+        cout << H->getCount() << " " << H->print() << endl;
+    }
+
+    if(type=="double"){
+        MaxHeap<double>* H = new MaxHeap<double>(N);
+        for(int j=0; j<N; j++){
+            in >> type;
+            if(type[1]==':'){
+                stringstream s(type.substr(2,type.length()));
+                double v;
+                s >> v;
+                H->enqueue(v);
+            }
+            else{
+                H->extractMax();
+            }
+        }
+        cout << H->getCount() << " " << H->print() << endl;
     }
 }
 
