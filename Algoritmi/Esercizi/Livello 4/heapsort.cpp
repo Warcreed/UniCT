@@ -63,17 +63,17 @@ class BinaryHeap{
             buildHeap();
 
             for(int i = 1; i<len; i++)
-               V[i-1] = new H(*extractMax());
+               V[len-i-1] = new H(*extractMax());
             
             return V;
         } 
 };
 
 template<class H>
-class MinHeap : public BinaryHeap<H>{
+class MaxHeap : public BinaryHeap<H>{
     public:
-        bool compare(H* a, H* b){ return (*a) > (*b); }
-        MinHeap(H** A, int size, int Nelement) : BinaryHeap<H>(A, size, Nelement){}
+        bool compare(H* a, H* b){ return (*a) < (*b); }
+        MaxHeap(H** A, int size, int Nelement) : BinaryHeap<H>(A, size, Nelement){}
 };
 
 int main(){
@@ -93,7 +93,7 @@ int main(){
                 in >> tmp;
                 V[j] = new bool(tmp);
             }
-            MinHeap<bool>* H = new MinHeap<bool>(V, N+1, N);
+            MaxHeap<bool>* H = new MaxHeap<bool>(V, N+1, N);
              V = H->heapsort();
 
              out << H->getCount() << " ";
@@ -110,7 +110,7 @@ int main(){
                 in >> tmp;
                 V[j] = new char(tmp);
             }
-            MinHeap<char>* H = new MinHeap<char>(V, N+1, N);
+            MaxHeap<char>* H = new MaxHeap<char>(V, N+1, N);
              V = H->heapsort();
 
              out << H->getCount() << " ";
@@ -127,7 +127,7 @@ int main(){
                 in >> tmp;
                 V[j] = new int(tmp);
             }
-            MinHeap<int>* H = new MinHeap<int>(V, N+1, N);
+            MaxHeap<int>* H = new MaxHeap<int>(V, N+1, N);
              V = H->heapsort();
 
              out << H->getCount() << " ";
@@ -144,7 +144,7 @@ int main(){
                 in >> tmp;
                 V[j] = new double(tmp);
             }
-            MinHeap<double>* H = new MinHeap<double>(V, N+1, N);
+            MaxHeap<double>* H = new MaxHeap<double>(V, N+1, N);
              V = H->heapsort();
 
              out << H->getCount() << " ";
