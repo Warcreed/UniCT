@@ -60,7 +60,7 @@ template <class H> class BinaryHeap
         for(int i=floor(heapsize/2); i>0; i--) heapify(i);
     }
 
-    H* extractMax(){
+    H* extractMin(){
         if(heapsize == 0) return NULL;
         scambia(1, heapsize);
         heapsize--;

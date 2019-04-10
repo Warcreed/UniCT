@@ -49,7 +49,7 @@ class BinaryHeap{
             for(int i = floor(heapsize/2); i>0; i--) heapify(i);
         }
 
-        H* extractMax(){
+        H* extractMin(){
             if(heapsize == 0) return NULL;
             swap(1, heapsize--);
             heapify(1);
@@ -62,7 +62,7 @@ class BinaryHeap{
             buildHeap();
 
             for(int i = 1; i<len; i++)
-               extractMax();
+               extractMin();
         } 
 
         string print(){

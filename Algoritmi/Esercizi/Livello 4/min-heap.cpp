@@ -71,7 +71,7 @@ class BinaryHeap{
             return this;
         }
 
-        H* extractMax(){
+        H* extractMin(){
             if(heapsize==0) return NULL;
             scambia(1,heapsize);
             heapsize--;
@@ -122,7 +122,7 @@ for(int i=0; i<DIM; i++){
                 s >> v;
                 H->enqueue(v);
             } else {
-                H->extractMax();
+                H->extractMin();
             }
         }
         out << H->getCount() << " " << H->print() << endl;
@@ -135,7 +135,7 @@ for(int i=0; i<DIM; i++){
             if(type[1]==':'){
                 H->enqueue(type[2]);
             } else {
-                H->extractMax();
+                H->extractMin();
             }
         }
         out << H->getCount() << " " << H->print() << endl;
@@ -151,7 +151,7 @@ for(int i=0; i<DIM; i++){
                 s >> v;
                 H->enqueue(v);
             } else {
-                H->extractMax();
+                H->extractMin();
             }
         }
         out << H->getCount() << " " << H->print() << endl;
@@ -167,7 +167,7 @@ for(int i=0; i<DIM; i++){
                 s >> v;
                 H->enqueue(v);
             } else {
-                H->extractMax();
+                H->extractMin();
             }
         }
         out << H->getCount() << " " << H->print() << endl;
