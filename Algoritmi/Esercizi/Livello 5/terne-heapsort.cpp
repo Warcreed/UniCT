@@ -59,7 +59,6 @@ class BinaryHeap{
         }
 
         H* extractMax(){
-           
             if(heapsize == 0) return nullptr;
             scambia(1, heapsize--);
             heapify(1);
