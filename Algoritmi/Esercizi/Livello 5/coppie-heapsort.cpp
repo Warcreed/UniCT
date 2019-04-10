@@ -106,6 +106,7 @@ int main(){
                 s1 >> a1;
                 s2 >> a2;
                 v[j] = new Coppia<bool>(a1, a2);
+                
                 cout << *(v[j]->a) << " " << v[j]->b << endl;
            }
             
