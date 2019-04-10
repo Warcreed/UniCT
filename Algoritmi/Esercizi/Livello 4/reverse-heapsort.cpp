@@ -2,7 +2,6 @@
 #include<sstream>
 #include<string>
 #include<cmath>
-#include<iostream>
 
 using namespace std;
 
@@ -67,7 +66,7 @@ class BinaryHeap{
         } 
 
         string print(){
-            stringstream s("ciao");
+            stringstream s;
             for(int i = 1; i<len; i++)
                 s << *A[i] << " ";
             return s.str();
