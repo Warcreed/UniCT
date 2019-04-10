@@ -2,8 +2,6 @@
 #include<sstream>
 #include<cmath>
 #include<string>
-#include<iostream>
-#include<cstdlib>
 
 using namespace std;
 
@@ -49,8 +47,8 @@ class BinaryHeap{
     public:
         virtual bool compare(H* a, H* b) = 0;
 
-        BinaryHeap(H** A, int size, int Nelement){
-            this.A = A;
+        BinaryHeap(H** C, int size, int Nelement){
+            A = C;
             len = size;
             heapsize = Nelement;
             count = 0;
@@ -61,8 +59,9 @@ class BinaryHeap{
         }
 
         H* extractMax(){
+           
             if(heapsize == 0) return nullptr;
-            scambia(1, heapsize);
+            scambia(1, heapsize--);
             heapify(1);
             return A[heapsize+1];
         }
@@ -78,13 +77,24 @@ class BinaryHeap{
         string print(){
             stringstream s;
             for(int i=1; i<len; i++)
-                s << *A[i] << " ";
+                s << "(" << *(A[i]->a) << " " << *(A[i]->b) << ") " ;
             return s.str();
         }
 };
 
+template<class H>
+class MaxHeap : public BinaryHeap<H>{
+    public:
+        MaxHeap(H** A, int size, int Nelement) : BinaryHeap<H>(A, size, Nelement){}
+        
+        bool compare(H* a, H* b){
+            if(*(a->a) < *(b->a) || (*(a->a) == *(b->a) && (*(a->b) < *(b->b))))
+              return true;
+            return false;
+        }
+};
 int main(){
-    const int DIM = 1;
+    const int DIM = 100;
     ifstream in("input.txt");
     ofstream out("output.txt");
 
@@ -101,16 +111,71 @@ int main(){
                 stringstream s1, s2;
                 in >> a >> b;
                 s1 << a.substr(1,a.length());
-                s2 << b.substr(1,b.length()-1);
+                s2 << b.substr(0,b.length()-1);
                 bool a1, a2;
                 s1 >> a1;
                 s2 >> a2;
                 v[j] = new Coppia<bool>(a1, a2);
-                
-                cout << *(v[j]->a) << " " << v[j]->b << endl;
            }
-            
 
+           MaxHeap<Coppia<bool>>* H = new MaxHeap<Coppia<bool>>(v, N+1, N);
+           H->heapsort();
+
+           out << H->getCount() << " " << H->print() << endl;         
+        }
+
+        if(type == "char"){
+            Coppia<char>** v = new Coppia<char>*[N+1];
+            for(int j = 1; j<=N; j++){
+                string a, b;
+                in >> a >> b;
+                v[j] = new Coppia<char>(a[1], b[0]);
+           }
+
+           MaxHeap<Coppia<char>>* H = new MaxHeap<Coppia<char>>(v, N+1, N);
+           H->heapsort();
+
+           out << H->getCount() << " " << H->print() << endl;         
+        }
+
+        if(type == "int"){
+            Coppia<int>** v = new Coppia<int>*[N+1];
+            for(int j = 1; j<=N; j++){
+                string a, b;
+                stringstream s1, s2;
+                in >> a >> b;
+                s1 << a.substr(1,a.length());
+                s2 << b.substr(0,b.length()-1);
+                int a1, a2;
+                s1 >> a1;
+                s2 >> a2;
+                v[j] = new Coppia<int>(a1, a2);
+           }
+
+           MaxHeap<Coppia<int>>* H = new MaxHeap<Coppia<int>>(v, N+1, N);
+           H->heapsort();
+
+           out << H->getCount() << " " << H->print() << endl;         
+        }
+
+        if(type == "double"){
+            Coppia<double>** v = new Coppia<double>*[N+1];
+            for(int j = 1; j<=N; j++){
+                string a, b;
+                stringstream s1, s2;
+                in >> a >> b;
+                s1 << a.substr(1,a.length());
+                s2 << b.substr(0,b.length()-1);
+                double a1, a2;
+                s1 >> a1;
+                s2 >> a2;
+                v[j] = new Coppia<double>(a1, a2);
+           }
+
+           MaxHeap<Coppia<double>>* H = new MaxHeap<Coppia<double>>(v, N+1, N);
+           H->heapsort();
+
+           out << H->getCount() << " " << H->print() << endl;         
         }
     }
     return 0;
