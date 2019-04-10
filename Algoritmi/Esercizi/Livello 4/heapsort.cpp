@@ -2,7 +2,6 @@
 #include<sstream>
 #include<string>
 #include<cmath>
-#include<iostream>
 
 using namespace std;
 
@@ -71,14 +70,14 @@ class BinaryHeap{
 };
 
 template<class H>
-class MaxHeap : public BinaryHeap<H>{
+class MinHeap : public BinaryHeap<H>{
     public:
-        bool compare(H* a, H* b){ return (*a)>  (*b); }
-        MaxHeap(H** A, int size, int Nelement) : BinaryHeap<H>(A, size, Nelement){}
+        bool compare(H* a, H* b){ return (*a) > (*b); }
+        MinHeap(H** A, int size, int Nelement) : BinaryHeap<H>(A, size, Nelement){}
 };
 
 int main(){
-    const int DIM = 3;
+    const int DIM = 100;
     ifstream in("input.txt");
     ofstream out("output.txt");
     int N = 0;
@@ -94,7 +93,7 @@ int main(){
                 in >> tmp;
                 V[j] = new bool(tmp);
             }
-            MaxHeap<bool>* H = new MaxHeap<bool>(V, N+1, N);
+            MinHeap<bool>* H = new MinHeap<bool>(V, N+1, N);
              V = H->heapsort();
 
              out << H->getCount() << " ";
@@ -111,7 +110,7 @@ int main(){
                 in >> tmp;
                 V[j] = new char(tmp);
             }
-            MaxHeap<char>* H = new MaxHeap<char>(V, N+1, N);
+            MinHeap<char>* H = new MinHeap<char>(V, N+1, N);
              V = H->heapsort();
 
              out << H->getCount() << " ";
@@ -128,7 +127,7 @@ int main(){
                 in >> tmp;
                 V[j] = new int(tmp);
             }
-            MaxHeap<int>* H = new MaxHeap<int>(V, N+1, N);
+            MinHeap<int>* H = new MinHeap<int>(V, N+1, N);
              V = H->heapsort();
 
              out << H->getCount() << " ";
@@ -145,7 +144,7 @@ int main(){
                 in >> tmp;
                 V[j] = new double(tmp);
             }
-            MaxHeap<double>* H = new MaxHeap<double>(V, N+1, N);
+            MinHeap<double>* H = new MinHeap<double>(V, N+1, N);
              V = H->heapsort();
 
              out << H->getCount() << " ";
