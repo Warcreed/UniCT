@@ -2,6 +2,7 @@
 #include<sstream>
 #include<string>
 #include<cmath>
+#include<iostream>
 
 using namespace std;
 
@@ -58,15 +59,19 @@ class BinaryHeap{
 
         int getCount(){ return count;}
 
-        H** heapsort(){
-            H** V = new H*[heapsize];
+        void heapsort(){
             buildHeap();
 
             for(int i = 1; i<len; i++)
-               V[len-i-1] = new H(*extractMax());
-            
-            return V;
+               extractMax();
         } 
+
+        string print(){
+            stringstream s("ciao");
+            for(int i = 1; i<len; i++)
+                s << *A[i] << " ";
+            return s.str();
+        }
 };
 
 template<class H>
@@ -94,13 +99,9 @@ int main(){
                 V[j] = new bool(tmp);
             }
             MaxHeap<bool>* H = new MaxHeap<bool>(V, N+1, N);
-             V = H->heapsort();
+            H->heapsort();
 
-             out << H->getCount() << " ";
-            for(int j=0; j<N; j++)
-                out << *V[j] << " ";
-            out << endl;
-            
+            out << H->getCount() << " " << H->print() << endl;      
         }
 
         if(type == "char"){
@@ -111,13 +112,9 @@ int main(){
                 V[j] = new char(tmp);
             }
             MaxHeap<char>* H = new MaxHeap<char>(V, N+1, N);
-             V = H->heapsort();
+            H->heapsort();
 
-             out << H->getCount() << " ";
-            for(int j=0; j<N; j++)
-                out << *V[j] << " ";
-            out << endl;
-            
+            out << H->getCount() << " " << H->print() << endl;
         }
 
         if(type == "int"){
@@ -128,13 +125,9 @@ int main(){
                 V[j] = new int(tmp);
             }
             MaxHeap<int>* H = new MaxHeap<int>(V, N+1, N);
-             V = H->heapsort();
+             H->heapsort();
 
-             out << H->getCount() << " ";
-            for(int j=0; j<N; j++)
-                out << *V[j] << " ";
-            out << endl;
-            
+            out << H->getCount() << " " << H->print() << endl;
         }
 
         if(type == "double"){
@@ -145,12 +138,9 @@ int main(){
                 V[j] = new double(tmp);
             }
             MaxHeap<double>* H = new MaxHeap<double>(V, N+1, N);
-             V = H->heapsort();
+             H->heapsort();
 
-             out << H->getCount() << " ";
-            for(int j=0; j<N; j++)
-                out << *V[j] << " ";
-            out << endl;       
+            out << H->getCount() << " " << H->print() << endl;
         }    
     }
 return 0;    
