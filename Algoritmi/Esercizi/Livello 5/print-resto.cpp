@@ -1,10 +1,12 @@
 #include<fstream>
 #include<iostream>
 #include<algorithm>
+#include<sstream>
+#include<climits>
 
 using namespace std;
 
-void countingSort(int* A, int N){
+ void countingSort(int* A, int N){
     int max = A[0];
     int min = A[0];
     for(int i = 0; i < N; i++){
@@ -20,43 +22,52 @@ void countingSort(int* A, int N){
     for(int i = N-1; i >= 0; i--) B[(C[A[i]-min]--) - 1] = A[i];
 
     for(int i = 0; i < N; i++) A[i] = B[i];
+} 
+
+int numCoins(int* A, int N, int R, int* coins){
+    int* restTable = new int[R+1];
+    restTable[0] = 0;
+    for(int i = 1; i <= R; i++) restTable[i] = INT_MAX-1;           //-1 importante perché altrimenti INT_MAX ruota al valore negativo
+                                                                    //nel caso in cui considero il minimo di una cella che non è stata modificata precedentemente.
+    for(int i = 1; i <= R; i++){ 
+        int coin = -1;                                   
+         for(int j = 0; j < N; j++){
+             if(i >= A[j]){
+                int tmp = restTable[i];
+                restTable[i] = min(restTable[i - A[j]] + 1, restTable[i]);
+                if(restTable[i] != tmp) coins[i] = A[j]; 
+             }     
+         }
+    }    
+    return restTable[R];
 }
 
-int** numCoins(int* A, int N, int R){
-    int** restTable = new int*[N+1];
-    for(int i = 0; i <= N; i++){
-         restTable[i] = new int[R+1];
-        restTable[i][0] = 0;
+string printCoins(int* coins, int R){
+    int i = R;
+    stringstream s;
+    int usedCoins[R];
+    int j = 0;
+    while(i > 0){
+        usedCoins[j++] = coins[i];
+        i -= coins[i];
     }
-    for(int i = 0; i <= R; i++) restTable[0][i] = INT_MAX-1;
-
-    for(int i = 1; i <= N; i++)
-        for(int j = 1; j <= R; j++)
-            if(A[i-1] > j) restTable[i][j] = restTable[i-1][j];
-            else restTable[i][j] = min(restTable[i][j - A[i-1]] + 1, restTable[i-1][j]);
-            
-     /* for(int i = 1; i <= N; i++){
-        for(int j = 0; j <= R; j++)
-            cout << restTable[i][j] << " ";
-        cout << endl; 
-    }   */
-
-    return restTable;
+    countingSort(usedCoins, j);
+    for(int i = 0; i < j; i++) s << usedCoins[i] << " ";
+    string out = s.str();
+    return out;
 }
- void printResto(int** rest, int i, int j, int* A, ostream& out){
+
+/* Metodo ricorsivo, non perfettamente funzionante
+void printResto(int** rest, int i, int j, int* A, ostream& out){
  	
      if(j <= 0) return;
      if(rest[i][j] != rest[i-1][j]){
          printResto(rest, i, j - A[i-1], A, out);
-         out <<  A[i-1] << " ";
-         
+         out <<  A[i-1] << " ";   
      }
-     else{
-          printResto(rest, i - 1 , j, A, out); 
+     else printResto(rest, i - 1 , j, A, out); 
          //cout << i << " " <<  j << " " << endl;
-     } 
-     
-    /*  string s = "";
+      string s = "";
      while(j != 0){
          if(rest[i][j] != rest[i-1][j]){
              s += (char) A[i] + ' ';
@@ -65,8 +76,8 @@ int** numCoins(int* A, int N, int R){
          else i--;
          cout << s << " ";
     }
-    return s; */
- }
+    return s; 
+ } */
 
 int main(){
     const int DIM = 100;
@@ -77,12 +88,9 @@ int main(){
         in >> R >> N;
         int A[N] = {0};
         for(int j = 0; j < N; j++) in >> A[j];
-        countingSort(A, N);
-        int** rest = numCoins(A, N, R);        
-        string s = "";
-        out << rest[N][R] << " "; 
-        printResto(rest, N, R, A, out);
-        out << endl;
+        int coins[R+1];
+        int rest = numCoins(A, N, R, coins);        
+        out << rest << " " << printCoins(coins, R) << endl;
     }
     return 0;
 }
