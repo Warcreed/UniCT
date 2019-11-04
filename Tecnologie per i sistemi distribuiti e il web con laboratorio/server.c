@@ -45,7 +45,7 @@ int main(int argc, char* argv[]){
     if(bind(sockfd, (struct sockaddr*) &server_addr, sizeof(server_addr)) == -1)
         handleError("bind");
     
-    if(listen(sockfd, 2) == -1)
+    if(listen(sockfd, 1) == -1)
         handleError("listen");
 
     while(1){
