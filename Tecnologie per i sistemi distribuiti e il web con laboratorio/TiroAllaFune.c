@@ -6,7 +6,7 @@
 
 pthread_mutex_t player_one = PTHREAD_MUTEX_INITIALIZER;
 pthread_mutex_t player_two = PTHREAD_MUTEX_INITIALIZER;
-// pthread_mutex_t mutex = PTHREAD_MUTEX_INITIALIZER; //ho dei dubbi sulla reale utilità di questa mutex
+pthread_mutex_t mutex = PTHREAD_MUTEX_INITIALIZER; //ho dei dubbi sulla reale utilità di questa mutex
 
 int posizione = 0;
 int vittorie_tp0 = 0;
@@ -19,15 +19,15 @@ void first_player(){
         int forza = rand() % 6;
         sleep(recupero);
         if (posizione >= 10)        {
-            // pthread_mutex_lock(&mutex);
+            pthread_mutex_lock(&mutex);
             ++vittorie_tp1;
             posizione = 0;
-            // pthread_mutex_unlock(&mutex);
+            pthread_mutex_unlock(&mutex);
             pthread_mutex_unlock(&player_two);
         }else{
-            // pthread_mutex_lock(&mutex);
+            pthread_mutex_lock(&mutex);
             posizione -= forza;
-            // pthread_mutex_unlock(&mutex);
+            pthread_mutex_unlock(&mutex);
             if(posizione <= -10)
                 pthread_mutex_lock(&player_one);
         }   
@@ -42,15 +42,15 @@ void second_player(){
         int forza = rand() % 6;
         sleep(recupero);
         if (posizione <= -10){
-            // pthread_mutex_lock(&mutex);
+            pthread_mutex_lock(&mutex);
             ++vittorie_tp0;
             posizione = 0;
-            // pthread_mutex_unlock(&mutex);
+            pthread_mutex_unlock(&mutex);
             pthread_mutex_unlock(&player_one);
         }else{
-            // pthread_mutex_lock(&mutex);
+            pthread_mutex_lock(&mutex);
             posizione += forza;
-            // pthread_mutex_unlock(&mutex);
+            pthread_mutex_unlock(&mutex);
             if(posizione >= 10)
                 pthread_mutex_lock(&player_two);
         }   
