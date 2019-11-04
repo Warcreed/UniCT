@@ -18,19 +18,17 @@ void first_player(){
         int recupero = rand() % 4;
         int forza = rand() % 6;
         sleep(recupero);
+        pthread_mutex_lock(&mutex);
         if (posizione >= 10)        {
-            pthread_mutex_lock(&mutex);
             ++vittorie_tp1;
             posizione = 0;
-            pthread_mutex_unlock(&mutex);
             pthread_mutex_unlock(&player_two);
         }else{
-            pthread_mutex_lock(&mutex);
             posizione -= forza;
-            pthread_mutex_unlock(&mutex);
             if(posizione <= -10)
                 pthread_mutex_lock(&player_one);
-        }   
+        }
+        pthread_mutex_unlock(&mutex);   
     }
     pthread_exit(NULL);
 }
@@ -41,19 +39,17 @@ void second_player(){
         int recupero = rand() % 4;
         int forza = rand() % 6;
         sleep(recupero);
+        pthread_mutex_lock(&mutex);
         if (posizione <= -10){
-            pthread_mutex_lock(&mutex);
             ++vittorie_tp0;
             posizione = 0;
-            pthread_mutex_unlock(&mutex);
             pthread_mutex_unlock(&player_one);
         }else{
-            pthread_mutex_lock(&mutex);
             posizione += forza;
-            pthread_mutex_unlock(&mutex);
             if(posizione >= 10)
                 pthread_mutex_lock(&player_two);
         }   
+        pthread_mutex_unlock(&mutex);
     }
     pthread_exit(NULL);
 }
