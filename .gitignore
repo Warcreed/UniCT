@@ -33,6 +33,7 @@
 *.out
 *.app
 *.file
+*.elf
 
 # Test
 prova.*
