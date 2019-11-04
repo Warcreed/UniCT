@@ -12,16 +12,13 @@ int posizione = 0;
 int vittorie_tp0 = 0;
 int vittorie_tp1 = 0;
 
-void first_player()
-{
-    while (vittorie_tp0 < 10 && vittorie_tp1 < 10)
-    {
+void first_player(){
+    while (vittorie_tp0 < 10 && vittorie_tp1 < 10)    {
         printf("Primo giocatore: %d\n", posizione);
         int recupero = rand() % 4;
         int forza = rand() % 6;
         sleep(recupero);
-        if (posizione >= 10)
-        {
+        if (posizione >= 10)        {
             // pthread_mutex_lock(&mutex);
             ++vittorie_tp1;
             posizione = 0;
@@ -38,16 +35,13 @@ void first_player()
     pthread_exit(NULL);
 }
 
-void second_player()
-{
-    while (vittorie_tp1 < 10 && vittorie_tp0 < 10)
-    {
+void second_player(){
+    while (vittorie_tp1 < 10 && vittorie_tp0 < 10)    {
         printf("Secondo giocatore: %d\n", posizione);
         int recupero = rand() % 4;
         int forza = rand() % 6;
         sleep(recupero);
-        if (posizione <= -10)
-        {
+        if (posizione <= -10){
             // pthread_mutex_lock(&mutex);
             ++vittorie_tp0;
             posizione = 0;
@@ -64,8 +58,7 @@ void second_player()
     pthread_exit(NULL);
 }
 
-int main(int argc, char *argv[])
-{
+int main(int argc, char *argv[]){
     pthread_t tp[2];
     srand(time(NULL));
     pthread_create(&tp[0], NULL, (void*) &first_player, ((void *)0));
