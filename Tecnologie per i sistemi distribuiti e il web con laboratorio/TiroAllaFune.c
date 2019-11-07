@@ -22,6 +22,7 @@ void first_player(){
         if (posizione >= 10)        {
             ++vittorie_tp1;
             posizione = 0;
+            printf("\t\t\t\tVittorie Secondo giocatore: %d\n", vittorie_tp1);
             pthread_mutex_unlock(&player_two);
         }else{
             posizione -= forza;
@@ -35,7 +36,7 @@ void first_player(){
 
 void second_player(){
     while (vittorie_tp1 < 10 && vittorie_tp0 < 10)    {
-        printf("Secondo giocatore: %d\n", posizione);
+        printf("\t\t\t\tSecondo giocatore: %d\n", posizione);
         int recupero = rand() % 4;
         int forza = rand() % 6;
         sleep(recupero);
@@ -43,6 +44,7 @@ void second_player(){
         if (posizione <= -10){
             ++vittorie_tp0;
             posizione = 0;
+            printf("Vittorie Primo giocatore: %d\n", vittorie_tp0);
             pthread_mutex_unlock(&player_one);
         }else{
             posizione += forza;
