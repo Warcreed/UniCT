@@ -78,10 +78,6 @@ void main(){
 				printf("%.2d%.2d\n", time[0], time[1]);
 				sprintf(dysp, "%.2d%.2d", time[0], time[1]);
 				DISPLAY_puts(0, dysp);
-				if(stato_led){
-					GPIO_toggle(GPIOC, 2);
-					stato_led = 0;
-				}
 				break;
 			case S_CONF:
 				GPIO_write(GPIOB, 0, 1);
@@ -201,9 +197,9 @@ void TIM2_IRQHandler(){
 		add_sec++;
 		if(stato == S_CONFTIME)
 			led_on = !led_on;
-		if(stato == S_RUN){
+		if(stato == S_RUN && add_sec > 1){
 			if((time[0] == start_time[0] && time[1] == start_time[1]) || (time[0] == end_time[0] && time[1] == end_time[1]))
-				stato_led = 1;
+				GPIO_toggle(GPIOC, 2);
 		}
 
 		TIM_update_clear(TIM2);
